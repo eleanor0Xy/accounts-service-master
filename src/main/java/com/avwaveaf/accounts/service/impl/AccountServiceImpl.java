@@ -70,11 +70,32 @@ public class AccountServiceImpl implements IAccountService {
      * handler for update PUT method in customer Object
      *
      * @param updatedCustomer - CustomerDTO Object
-     *
+     * @return boolean - success flag
      */
     @Override
     public boolean updateAccount(CustomerDTO updatedCustomer) {
-        return false;
+        boolean isUpdated = false;
+        AccountsDTO accDTO = updatedCustomer.getAccounts();
+        if(accDTO!=null){
+            // Find and map accounts object
+            Accounts acc = accountsRepository.findById(accDTO.getAccountNumber()).orElseThrow(
+                    () -> new ResourceNotFoundException("Accounts", "Account Number", accDTO.getAccountNumber().toString())
+            );
+            AccountsMapper.toEntity(accDTO, acc);
+            acc = accountsRepository.save(acc);
+
+            // find and map customer object
+            Long customerId = acc.getCustomerId();
+            Customer cust = customerRepository.findById(customerId).orElseThrow(
+                    ()-> new ResourceNotFoundException("Customer", "Customer ID", customerId.toString())
+            );
+            CustomerMapper.toEntity(updatedCustomer, cust);
+            customerRepository.save(cust);
+
+            isUpdated = true;
+        }
+
+        return isUpdated;
     }
 
     /**
