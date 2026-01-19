@@ -1,0 +1,4 @@
+### GET request to fetch accounts detail
+GET http://localhost:8080/api/v1/fetch?mobileNumber=1112223334444
+
+###
