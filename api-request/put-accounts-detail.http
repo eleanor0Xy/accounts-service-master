@@ -1,0 +1,15 @@
+### PUT request to update accounts detail
+PUT http://localhost:8080/api/v1/update
+Content-Type: application/json
+
+{
+  "name": "imposum",
+  "email": "imposum@ltd.llc",
+  "mobileNumber": "1112223334444",
+  "accounts": {
+    "accountNumber": 1393489521,
+    "accountType": "Savings",
+    "branchAddress": "444 update street, Imaginary City"
+  }
+}
+###
